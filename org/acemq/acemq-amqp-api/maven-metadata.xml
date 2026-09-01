@@ -3,12 +3,13 @@
   <groupId>org.acemq</groupId>
   <artifactId>acemq-amqp-api</artifactId>
   <versioning>
-    <release>0.2.0</release>
+    <release>0.2.1</release>
     <versions>
       <version>0.0.1</version>
       <version>0.1.0</version>
       <version>0.2.0</version>
+      <version>0.2.1</version>
     </versions>
-    <lastUpdated>20260901131736</lastUpdated>
+    <lastUpdated>20260901131848</lastUpdated>
   </versioning>
 </metadata>
