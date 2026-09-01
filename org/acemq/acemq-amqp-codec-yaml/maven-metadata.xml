@@ -3,13 +3,14 @@
   <groupId>org.acemq</groupId>
   <artifactId>acemq-amqp-codec-yaml</artifactId>
   <versioning>
-    <release>0.2.1</release>
+    <release>0.2.2</release>
     <versions>
       <version>0.0.1</version>
       <version>0.1.0</version>
       <version>0.2.0</version>
       <version>0.2.1</version>
+      <version>0.2.2</version>
     </versions>
-    <lastUpdated>20260901132336</lastUpdated>
+    <lastUpdated>20260901132824</lastUpdated>
   </versioning>
 </metadata>
