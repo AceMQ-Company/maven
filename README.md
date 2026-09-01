@@ -20,12 +20,12 @@ Add the repository alongside your dependencies:
   <dependency>
     <groupId>org.acemq</groupId>
     <artifactId>acemq-amqp-core</artifactId>
-    <version>0.0.1</version>
+    <version>0.1.0</version>
   </dependency>
   <dependency>
     <groupId>org.acemq</groupId>
     <artifactId>acemq-transport-rabbitmq</artifactId>
-    <version>0.0.1</version>
+    <version>0.1.0</version>
     <scope>runtime</scope>
   </dependency>
 </dependencies>
