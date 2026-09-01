@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.acemq</groupId>
+  <artifactId>acemq-amqp-codec-json</artifactId>
+  <version>0.1.0</version>
+  <name>AceMQ AMQP JSON Codec</name>
+  <description>JSON payloads, using Jackson. The format AceMQ publishes in by default, so this
+    module is a required dependency of the core rather than an optional one: which format an
+    application writes should not depend on what happens to be on its classpath.</description>
+  <url>https://github.com/AceMQ-Company/acemq-java-amqp/acemq-amqp-codec-json</url>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>felipeg48</id>
+      <name>Felipe Gutierrez</name>
+      <organization>AceMQ</organization>
+      <organizationUrl>https://acemq.com</organizationUrl>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/AceMQ-Company/acemq-java-amqp.git/acemq-amqp-codec-json</connection>
+    <developerConnection>scm:git:git@github.com:AceMQ-Company/acemq-java-amqp.git/acemq-amqp-codec-json</developerConnection>
+    <url>https://github.com/AceMQ-Company/acemq-java-amqp/acemq-amqp-codec-json</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>org.acemq</groupId>
+      <artifactId>acemq-amqp-api</artifactId>
+      <version>0.1.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.18.2</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+      <version>2.18.2</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>
