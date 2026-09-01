@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <plugins>
+    <plugin>
+      <name>AceMQ Security (development)</name>
+      <prefix>acemq-security-dev</prefix>
+      <artifactId>acemq-security-dev</artifactId>
+    </plugin>
+  </plugins>
+</metadata>
