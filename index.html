@@ -12,6 +12,8 @@
          font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
   main { max-width: 46rem; margin: 0 auto; }
   h1 { font-size:1.9rem; margin:0 0 .3rem; letter-spacing:-.02em; }
+  .logo { height:40px; width:auto; display:block; margin:0 0 .9rem; }
+  @media (prefers-color-scheme: dark) { .logo { filter: invert(1) brightness(1.15); } }
   .sub { color:var(--muted); margin:0 0 2.5rem; }
   h2 { font-size:1.1rem; margin:2.5rem 0 .75rem; letter-spacing:-.01em; }
   pre { background:var(--code-bg); border:1px solid var(--line); border-radius:8px;
@@ -26,7 +28,8 @@
   footer { margin-top:3.5rem; padding-top:1.25rem; border-top:1px solid var(--line); color:var(--muted); font-size:.85rem; }
 </style>
 <main>
-  <h1>AceMQ Maven repository</h1>
+  <img class="logo" src="acemq.png" alt="AceMQ">
+  <h1>Maven repository</h1>
   <p class="sub">Published artifacts for <code>org.acemq</code>. No credentials needed.</p>
 
   <h2>Maven</h2>
@@ -91,6 +94,9 @@ dependencies {
   <footer>
     Written by the release workflow in
     <a href="https://github.com/AceMQ-Company/acemq-java-amqp">acemq-java-amqp</a>, never by hand.
-    Apache-2.0.
+    Apache-2.0, and provided without warranty of any kind.
+    <a href="https://acemq.com">Enterprise support</a>.
+    <br>RabbitMQ is a trademark of Broadcom Inc. and/or its subsidiaries; AceMQ is an
+    independent project and is not affiliated with or endorsed by Broadcom.
   </footer>
 </main>
