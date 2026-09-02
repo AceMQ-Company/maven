@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.acemq</groupId>
+  <artifactId>acemq-amqp-codec-protobuf</artifactId>
+  <version>0.2.6</version>
+  <name>AceMQ AMQP Protobuf Codec</name>
+  <description>Protocol Buffers payloads. Reached through as(ProtobufCodec.of(...)) rather than a name, because protobuf bytes do not say which message they are and a reader must be told what to parse them as.</description>
+  <url>https://github.com/AceMQ-Company/acemq-java-amqp/acemq-amqp-codec-protobuf</url>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>felipeg48</id>
+      <name>Felipe Gutierrez</name>
+      <organization>AceMQ</organization>
+      <organizationUrl>https://acemq.com</organizationUrl>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/AceMQ-Company/acemq-java-amqp.git/acemq-amqp-codec-protobuf</connection>
+    <developerConnection>scm:git:git@github.com:AceMQ-Company/acemq-java-amqp.git/acemq-amqp-codec-protobuf</developerConnection>
+    <url>https://github.com/AceMQ-Company/acemq-java-amqp/acemq-amqp-codec-protobuf</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>org.acemq</groupId>
+      <artifactId>acemq-amqp-api</artifactId>
+      <version>0.2.6</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-java</artifactId>
+      <version>4.29.3</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>
