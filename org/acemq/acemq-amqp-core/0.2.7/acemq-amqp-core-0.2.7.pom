@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.acemq</groupId>
+  <artifactId>acemq-amqp-core</artifactId>
+  <version>0.2.7</version>
+  <name>AceMQ AMQP Core</name>
+  <description>The protocol-agnostic engine: publisher, consumer runtime, retry ladder, topology planner, codecs, interceptors, metrics and tracing.</description>
+  <url>https://github.com/AceMQ-Company/acemq-java-amqp/acemq-amqp-core</url>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>felipeg48</id>
+      <name>Felipe Gutierrez</name>
+      <organization>AceMQ</organization>
+      <organizationUrl>https://acemq.com</organizationUrl>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/AceMQ-Company/acemq-java-amqp.git/acemq-amqp-core</connection>
+    <developerConnection>scm:git:git@github.com:AceMQ-Company/acemq-java-amqp.git/acemq-amqp-core</developerConnection>
+    <url>https://github.com/AceMQ-Company/acemq-java-amqp/acemq-amqp-core</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>org.acemq</groupId>
+      <artifactId>acemq-amqp-api</artifactId>
+      <version>0.2.7</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.acemq</groupId>
+      <artifactId>acemq-transport-spi</artifactId>
+      <version>0.2.7</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.acemq</groupId>
+      <artifactId>acemq-amqp-codec-json</artifactId>
+      <version>0.2.7</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>2.0.16</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-core</artifactId>
+      <version>1.14.2</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-api</artifactId>
+      <version>1.45.0</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
+</project>
