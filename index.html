@@ -30,7 +30,9 @@
 <main>
   <img class="logo" src="acemq.png" alt="AceMQ">
   <h1>Maven repository</h1>
-  <p class="sub">Published artifacts for <code>org.acemq</code>. No credentials needed.</p>
+  <p class="sub">Published artifacts for <code>org.acemq</code>. No credentials needed.
+     Four libraries: the AMQP core, its Spring Boot starter, the RabbitMQ management
+     API, and the load generator.</p>
 
   <h2>Maven</h2>
 <pre><code>&lt;repositories&gt;
@@ -64,12 +66,16 @@ dependencies {
 }</code></pre>
 
   <h2>What is published</h2>
+
+  <h3>AceMQ for Java &mdash; <code>0.2.10</code></h3>
+  <p class="note"><a href="https://acemq.org/acemq-java-amqp/">Documentation</a> &middot;
+     <a href="https://github.com/AceMQ-Company/acemq-java-amqp">GitHub</a></p>
   <table>
     <tr><th>Artifact</th><th>What it is</th></tr>
     <tr><td><code>acemq-amqp-api</code></td><td>The types: Message, Envelope, Publisher, RetryPolicy, Ack</td></tr>
     <tr><td><code>acemq-amqp-core</code></td><td>The engine: AceMq, publishers, consumers, pipelines, replay</td></tr>
     <tr><td><code>acemq-transport-spi</code></td><td>The transport contract</td></tr>
-    <tr><td><code>acemq-transport-rabbitmq</code></td><td>RabbitMQ transport — add at runtime</td></tr>
+    <tr><td><code>acemq-transport-rabbitmq</code></td><td>RabbitMQ transport &mdash; add at runtime</td></tr>
     <tr><td><code>acemq-amqp-codec-json</code></td><td>JSON, the default format</td></tr>
     <tr><td><code>acemq-amqp-codec-xml</code></td><td>XML</td></tr>
     <tr><td><code>acemq-amqp-codec-yaml</code></td><td>YAML</td></tr>
@@ -79,6 +85,47 @@ dependencies {
     <tr><td><code>acemq-amqp-test</code></td><td>In-memory broker, for tests without Docker</td></tr>
     <tr><td><code>acemq-security-api</code></td><td>Pluggable transport security</td></tr>
   </table>
+
+  <h3>Spring Boot starter &mdash; <code>0.1.0</code></h3>
+  <p class="note">One artifact serves Spring Boot 3 and 4.
+     <a href="https://acemq.org/acemq-java-amqp-spring-boot-starter/">Documentation</a> &middot;
+     <a href="https://github.com/AceMQ-Company/acemq-java-amqp-spring-boot-starter">GitHub</a></p>
+  <table>
+    <tr><th>Artifact</th><th>What it is</th></tr>
+    <tr><td><code>acemq-spring-boot-starter</code></td><td>The one dependency to add: auto-configuration, the library, the RabbitMQ transport and JSON</td></tr>
+    <tr><td><code>acemq-spring-boot-autoconfigure</code></td><td>The auto-configuration alone, to bring your own transport or codec</td></tr>
+    <tr><td><code>acemq-spring-boot-health-boot3</code></td><td>Health indicator for Boot 2.7 and 3</td></tr>
+    <tr><td><code>acemq-spring-boot-health-boot4</code></td><td>Health indicator for Boot 4</td></tr>
+  </table>
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;org.acemq&lt;/groupId&gt;
+  &lt;artifactId&gt;acemq-spring-boot-starter&lt;/artifactId&gt;
+  &lt;version&gt;0.1.0&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+
+  <h3>RabbitMQ Admin &mdash; <code>0.1.0</code></h3>
+  <p class="note">RabbitMQ's HTTP management API. Its own version line, because it tracks
+     RabbitMQ rather than AceMQ.
+     <a href="https://acemq.org/acemq-java-rabbitmq-admin/">Documentation</a> &middot;
+     <a href="https://github.com/AceMQ-Company/acemq-java-rabbitmq-admin">GitHub</a></p>
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;org.acemq&lt;/groupId&gt;
+  &lt;artifactId&gt;acemq-java-rabbitmq-admin&lt;/artifactId&gt;
+  &lt;version&gt;0.1.0&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+
+  <h3>Workloads &mdash; <code>0.1.0</code></h3>
+  <p class="note">A load generator for AMQP brokers. The CLI is a
+     <a href="https://github.com/AceMQ-Company/acemq-java-amqp-workloads/releases/latest">download on the release</a>
+     rather than an artifact here &mdash; a shaded jar is a download, not a dependency.
+     <a href="https://acemq.org/acemq-java-amqp-workloads/">Documentation</a> &middot;
+     <a href="https://github.com/AceMQ-Company/acemq-java-amqp-workloads">GitHub</a></p>
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;org.acemq&lt;/groupId&gt;
+  &lt;artifactId&gt;acemq-java-amqp-workloads&lt;/artifactId&gt;
+  &lt;version&gt;0.1.0&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+
   <p class="note">Sources and Javadoc jars are published alongside every artifact.
      Browse the tree under <a href="org/acemq/">org/acemq/</a>.</p>
 
