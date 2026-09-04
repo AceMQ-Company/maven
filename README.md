@@ -117,6 +117,30 @@ because a shaded jar is a download rather than a dependency.
 
 Sources and Javadoc jars are published alongside every artifact.
 
+## Not on the JVM?
+
+The .NET libraries — C# and VB.NET from one assembly — are not here. They are NuGet
+packages, on a static feed run the same way as this one:
+
+```xml
+<!-- nuget.config, beside your solution -->
+<configuration>
+  <packageSources>
+    <add key="acemq" value="https://acemq.org/nuget/index.json" />
+  </packageSources>
+</configuration>
+```
+
+| Package | |
+|---|---|
+| `AceMq.Amqp` | the library |
+| `AceMq.Amqp.RabbitMq` | the RabbitMQ transport |
+| `AceMq.Amqp.Diagnostics` | Prometheus metrics and health over HTTP |
+
+[Browse the feed](https://acemq.org/nuget/) ·
+[Documentation](https://acemq.org/acemq-dotnet-amqp/) ·
+[GitHub](https://github.com/AceMQ-Company/acemq-dotnet-amqp)
+
 ## A note on this repository
 
 This is a plain Maven repository kept in Git: a directory layout of files served
