@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.acemq</groupId>
+  <artifactId>acemq-workloads-parent</artifactId>
+  <version>0.1.1</version>
+  <packaging>pom</packaging>
+
+  <name>AceMQ AMQP workloads</name>
+  <description>
+    A load generator for AMQP brokers, and a studio for designing and watching
+    what it runs.
+  </description>
+
+  <!--
+    Two modules, one version line.
+
+      library/  the load generator: the DSL, the CLI jar, and the engine.
+                Published as org.acemq:acemq-java-amqp-workloads, which is why
+                its coordinates did not change when it moved into a directory.
+
+      studio/   a Spring Boot application with the designer, the live view and
+                the run history. Its own jar, so the library stays as lean as
+                a pipeline needs it to be — nobody running `java -jar
+                acemq-workload.jar` in CI should be carrying a web server and a
+                front end they will never start.
+
+    They are released together on purpose. A studio that only works against
+    yesterday's library is a support question nobody needs, and separating the
+    version lines would make every change that touches both into two releases.
+  -->
+  <modules>
+    <module>library</module>
+    <module>studio</module>
+  </modules>
+
+  <licenses>
+    <license>
+      <name>The Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>17</maven.compiler.release>
+
+    <!--
+      Parameter names survive compilation.
+
+      Spring reads them to bind @PathVariable and @RequestParam without being
+      told the name twice, and without this every such handler fails at request
+      time with "parameter name information not available" — a runtime failure
+      for a compile-time omission. The Spring Boot parent sets this; this build
+      does not use that parent, so it sets it here.
+    -->
+    <maven.compiler.parameters>true</maven.compiler.parameters>
+  </properties>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <!--
+              Parameter names survive compilation.
+
+              Spring reads them to bind @PathVariable and @RequestParam without
+              being told the name twice. Without this every such handler fails
+              at request time with "parameter name information not available",
+              which is a runtime failure for a compile-time omission. The Spring
+              Boot parent sets this; this build does not use that parent, so it
+              sets it here.
+            -->
+            <parameters>true</parameters>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+</project>
