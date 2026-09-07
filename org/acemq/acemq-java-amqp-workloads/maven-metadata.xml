@@ -3,12 +3,13 @@
   <groupId>org.acemq</groupId>
   <artifactId>acemq-java-amqp-workloads</artifactId>
   <versioning>
-    <release>0.1.2</release>
+    <release>0.1.3</release>
     <versions>
       <version>0.1.0</version>
       <version>0.1.1</version>
       <version>0.1.2</version>
+      <version>0.1.3</version>
     </versions>
-    <lastUpdated>20260906194707</lastUpdated>
+    <lastUpdated>20260907014318</lastUpdated>
   </versioning>
 </metadata>
