@@ -26,12 +26,12 @@ Add the repository alongside your dependencies:
   <dependency>
     <groupId>org.acemq</groupId>
     <artifactId>acemq-amqp-core</artifactId>
-    <version>0.7.1</version>
+    <version>0.7.2</version>
   </dependency>
   <dependency>
     <groupId>org.acemq</groupId>
     <artifactId>acemq-transport-rabbitmq</artifactId>
-    <version>0.7.1</version>
+    <version>0.7.2</version>
     <scope>runtime</scope>
   </dependency>
 </dependencies>
@@ -50,7 +50,7 @@ No credentials are needed. Anyone can resolve from it.
 
 ## What is here
 
-### AceMQ for Java — `0.7.1`
+### AceMQ for Java — `0.7.2`
 
 [Documentation](https://acemq.org/acemq-java-amqp/) ·
 [GitHub](https://github.com/AceMQ-Company/acemq-java-amqp)
@@ -68,7 +68,7 @@ No credentials are needed. Anyone can resolve from it.
 | `acemq-amqp-test` | In-memory broker for tests |
 | `acemq-security-api` | Pluggable transport security |
 
-### Spring Boot starter — `0.7.1`
+### Spring Boot starter — `0.7.2`
 
 One artifact serves **Spring Boot 3 and 4**. The auto-configure module also runs on
 Boot 2.7.
@@ -86,11 +86,11 @@ Boot 2.7.
 <dependency>
   <groupId>org.acemq</groupId>
   <artifactId>acemq-spring-boot-starter</artifactId>
-  <version>0.7.1</version>
+  <version>0.7.2</version>
 </dependency>
 ```
 
-### RabbitMQ Admin — `0.7.1`
+### RabbitMQ Admin — `0.7.2`
 
 RabbitMQ's HTTP management API for Java. Java 11 bytecode, so a Boot 2.7
 application can use it alongside `acemq-amqp-core`.
@@ -101,7 +101,7 @@ application can use it alongside `acemq-amqp-core`.
 |---|---|
 | `acemq-java-rabbitmq-admin` | Users, vhosts, permissions, policies, federation, shovels, health checks, definitions |
 
-### Workloads — `0.7.1`
+### Workloads — `0.7.2`
 
 A load generator for AMQP brokers.
 [Documentation](https://acemq.org/acemq-java-amqp-workloads/) ·
