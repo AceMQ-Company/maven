@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.acemq</groupId>
+  <artifactId>acemq-infra-parent</artifactId>
+  <version>0.4.0</version>
+  <packaging>pom</packaging>
+
+  <name>AceMQ Infrastructure</name>
+  <description>Blue/green and canary cutovers for message brokers: the configuration format, the
+    validator, and — later — the planner and the CLI over them. Nothing here writes to a broker.</description>
+  <url>https://acemq.org/acemq-infrastructure/</url>
+
+  <organization>
+    <name>AceMQ</name>
+    <url>https://acemq.com</url>
+  </organization>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Felipe Gutierrez</name>
+      <organization>AceMQ</organization>
+      <organizationUrl>https://acemq.com</organizationUrl>
+    </developer>
+  </developers>
+
+  <!-- A reactor rather than one jar, because docs/shape.md already committed to
+       shipping a library and a CLI in one release, and because the provider is
+       the one part that must not be reachable from the rest. The validator is a
+       pure function over a parsed file and has to stay testable with no broker
+       and no management client anywhere near it; the moment core and the
+       RabbitMQ provider share a jar, that is a convention rather than a fact.
+       Modules make it a fact the compiler enforces.
+
+       The dependency direction is the enforcement for milestone one's last
+       clause. acemq-infra-core holds the model, the validator and the planner
+       and has no broker client on its classpath; acemq-infra-rabbitmq holds
+       probe() and depends on core; acemq-infra-cli depends on both. Nothing in
+       the planner can name a method that writes to a broker, because no such
+       method is reachable from where it is compiled, and Maven refuses the
+       cycle that would make one reachable.
+
+       Phase 2 adds acemq-infra-execute, which is the one module here that
+       writes, and it is placed so that it takes nothing away from the sentence
+       above. It sits beside acemq-infra-rabbitmq rather than inside it and
+       depends on core, so every arrow still points at core and core still has
+       no broker client: plan is exactly as incapable of writing after this
+       module exists as it was before. The other half of the same decision is
+       that the read-only wrapper the probe holds stays in acemq-infra-rabbitmq
+       and is not widened. The writing client is a different class in a
+       different module, so "the probe cannot write" goes on being a fact about
+       a classpath rather than a habit, and acemq-infra-rabbitmq having no
+       writing method anywhere in it is now the property to preserve.
+
+       The version stays 0.1.0-SNAPSHOT in every pom here. The release version
+       comes from the tag and is stamped with versions:set, which is how the
+       other repositories in this family avoid a committed file that has to be
+       remembered and bumped. -->
+  <modules>
+    <module>acemq-infra-core</module>
+    <module>acemq-infra-rabbitmq</module>
+    <module>acemq-infra-execute</module>
+    <module>acemq-infra-cli</module>
+  </modules>
+
+  <!-- Phase 4's module is not in that list, and the omission is the design.
+       acemq-infra-native builds a GraalVM image and then runs the cutover suite
+       against it, which is minutes rather than seconds and needs a toolchain an
+       ordinary `mvn verify` has no reason to demand. It joins the reactor under
+       -Pnative and nowhere else.
+
+       What it must not become is a suite that only a nightly ever runs.
+       docs/shape.md is unambiguous that a green jar proves nothing about the
+       artifact users get, so ci.yml runs this profile on every push and every
+       pull request, on the two Linux architectures that ship. The profile is
+       here to keep the toolchain optional for a person reading the code, not to
+       keep the binary optional for the build. -->
+  <profiles>
+    <profile>
+      <id>native</id>
+      <modules>
+        <module>acemq-infra-native</module>
+      </modules>
+    </profile>
+  </profiles>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <!-- Java 17, not the client libraries' 11. docs/shape.md settles this: the
+         libraries target 11 because an application on Spring Boot 2.7 has to be
+         able to depend on them, and that constraint belongs to a library other
+         people put on their classpath. This is an application. It takes records,
+         sealed interfaces and pattern matching and there is no caller to hold
+         back. -->
+    <maven.compiler.release>17</maven.compiler.release>
+
+    <!-- The only runtime dependency in the whole of core, and it is deliberate.
+         A native image is the distribution target (docs/shape.md), reflection is
+         what a native image takes away, and every dependency that binds YAML
+         into objects by reflection is a registration file somebody has to
+         maintain and a failure that only shows up in the field. SnakeYAML is
+         used here through compose() — the node tree, with marks — and nothing
+         is constructed reflectively. -->
+    <snakeyaml.version>2.7</snakeyaml.version>
+
+    <!-- RabbitMQ's management API for Java, from the acemq.org feed. The
+         provider module is the only thing that depends on it and it is the only
+         thing that may: the whole point of the module split is that the
+         validator and the planner cannot see a management client.
+
+         The version here is whatever the feed publishes as newest, and only
+         that. A newer one existing in somebody's local repository is not a
+         release, and a build that resolves from ~/.m2 and fails in CI is the
+         failure this note exists to prevent from happening twice. The
+         tracks-the-release job in ci.yml now holds the other end: it fails when
+         this number is behind the newest tag, which is how it was found sitting
+         at 0.1.0 after 0.1.1 was published. -->
+    <acemq.admin.version>0.1.1</acemq.admin.version>
+
+    <!-- Declared rather than inherited. acemq-java-rabbitmq-admin brings Jackson
+         in transitively, and acemq-infra-execute genuinely needs it in its own
+         right: a topology copy filters a definitions document and writes it back,
+         and the management API's statistics have to be read out of JSON that the
+         admin client does not model. Depending on somebody else's transitive
+         dependency for that is how a library bump becomes a compile error in a
+         module that never asked for it. The number matches what the admin client
+         resolves today, so this pins rather than upgrades. -->
+    <jackson.version>2.18.9</jackson.version>
+
+    <maven.surefire.plugin.version>3.5.2</maven.surefire.plugin.version>
+    <maven.failsafe.plugin.version>3.5.2</maven.failsafe.plugin.version>
+
+    <junit.version>5.11.4</junit.version>
+    <assertj.version>3.27.7</assertj.version>
+
+    <!-- 1.21.4 rather than anything older, which is a lesson this family has
+         already paid for: the versions before it send an API version Docker
+         Desktop now refuses, and the failure reads as "cannot connect to
+         Docker" on a machine where Docker is plainly running. -->
+    <testcontainers.version>1.21.4</testcontainers.version>
+
+    <!-- Level with acemq-java-rabbitmq-admin and acemq-java-amqp, which pin the
+         same client. Test scope only, and only in the provider module: nothing
+         shipped here speaks AMQP. -->
+    <amqp.client.version>5.36.0</amqp.client.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.yaml</groupId>
+        <artifactId>snakeyaml</artifactId>
+        <version>${snakeyaml.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.testcontainers</groupId>
+        <artifactId>testcontainers-bom</artifactId>
+        <version>${testcontainers.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-core</artifactId>
+        <version>${assertj.version}</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!-- The same split as acemq-java-rabbitmq-admin and acemq-java-amqp:
+             unit tests on every build, anything named *IT in verify. There is
+             no *IT here yet — nothing in this module can reach a broker — but
+             the split is set up now so that the provider module inherits it
+             rather than inventing its own. -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${maven.surefire.plugin.version}</version>
+          <configuration>
+            <excludes>
+              <exclude>**/*IT.java</exclude>
+            </excludes>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>${maven.failsafe.plugin.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+  <!-- Where acemq-java-rabbitmq-admin is read from. GitHub-hosted, like every
+       other artifact in this family, which is the standing policy rather than a
+       gap. The URL answers 301 to https://acemq.org/maven/ and Maven follows
+       it; anything that checks the feed by hand needs curl -L. -->
+  <repositories>
+    <repository>
+      <id>acemq</id>
+      <name>AceMQ releases</name>
+      <url>https://acemq-company.github.io/maven/</url>
+      <releases><enabled>true</enabled></releases>
+      <snapshots><enabled>false</enabled></snapshots>
+    </repository>
+  </repositories>
+</project>
