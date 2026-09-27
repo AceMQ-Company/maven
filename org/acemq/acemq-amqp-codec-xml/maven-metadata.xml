@@ -3,7 +3,7 @@
   <groupId>org.acemq</groupId>
   <artifactId>acemq-amqp-codec-xml</artifactId>
   <versioning>
-    <release>0.7.3</release>
+    <release>0.7.4</release>
     <versions>
       <version>0.1.0</version>
       <version>0.2.0</version>
@@ -24,7 +24,8 @@
       <version>0.7.1</version>
       <version>0.7.2</version>
       <version>0.7.3</version>
+      <version>0.7.4</version>
     </versions>
-    <lastUpdated>20260921131238</lastUpdated>
+    <lastUpdated>20260927192529</lastUpdated>
   </versioning>
 </metadata>
